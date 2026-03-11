@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler,LabelEncoder
 
 #Loading the dataset
 df=pd.read_csv('Housing.csv')
@@ -8,8 +10,9 @@ print(df.head())
 
 #Inspecting the dataset
 print(df.shape)
+
 print(df.info())
-print(df.describe())
+
 
 #Handling missing values
 print(df.isnull().sum())
@@ -19,5 +22,20 @@ plt.hist(df['price'],bins=20)
 plt.xlabel('Price')
 plt.ylabel('Frequency') 
 plt.title('Distribution of House Prices')
-plt.show()
-  
+#plt.show()
+
+x=df.drop('price',axis=1)
+y=df['price']
+
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=42)
+
+
+#Encoding categorical variables
+for col in x_train.select_dtypes(include=['object']):
+    le=LabelEncoder()
+    x_train[col]=le.fit_transform(x_train[col])
+    x_test[col]=le.transform(x_test[col])
+
+print(x_train.head())
+
+
