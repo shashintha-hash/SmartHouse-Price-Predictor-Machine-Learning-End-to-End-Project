@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler,LabelEncoder
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error
 
 #Loading the dataset
 df=pd.read_csv('Housing.csv')
@@ -37,5 +39,20 @@ for col in x_train.select_dtypes(include=['object']):
     x_test[col]=le.transform(x_test[col])
 
 print(x_train.head())
+
+
+#Training the model
+model=RandomForestRegressor(n_estimators=100,random_state=42)
+model.fit(x_train,y_train)
+
+prediction=model.predict(x_test)
+
+
+#Evaluating the model
+mae=mean_absolute_error(y_test,prediction)
+print(f"Mean Absolute Error: {mae}")
+
+
+
 
 
