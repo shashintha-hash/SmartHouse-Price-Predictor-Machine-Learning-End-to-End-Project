@@ -52,7 +52,19 @@ prediction=model.predict(x_test)
 mae=mean_absolute_error(y_test,prediction)
 print(f"Mean Absolute Error: {mae}")
 
+#feature scaling
+scaler=StandardScaler()
+x_train_scaled,x_test_scaled=scaler.fit_transform(x_train),scaler.transform(x_test)
 
 
+#feature importance
+importances=model.feature_importances_
+features=x_train.columns
 
-
+indices=np.argsort(importances)[::-1]
+plt.figure(figsize=(10,6))
+plt.title("Feature Importances")
+plt.bar(range(x_train.shape[1]),importances[indices],align='center')
+plt.xticks(range(x_train.shape[1]),features[indices],rotation=90)
+plt.tight_layout()
+plt.show()
