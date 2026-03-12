@@ -9,23 +9,21 @@ from sklearn.neighbors import KNeighborsRegressor
 
 #Loading the dataset
 df=pd.read_csv('Housing.csv')
-#print(df.head())
+print(df.head())
 
 #Inspecting the dataset
-#print(df.shape)
-
-#print(df.info())
+print(df.info())
 
 
 #Handling missing values
-#print(df.isnull().sum())
+print(df.isnull().sum())
 
 #Visualizing the data
 plt.hist(df['price'],bins=20)
 plt.xlabel('Price')
 plt.ylabel('Frequency') 
 plt.title('Distribution of House Prices')
-#plt.show()
+plt.show()
 
 x=df.drop('price',axis=1)
 y=df['price']
@@ -39,7 +37,6 @@ for col in x_train.select_dtypes(include=['object']):
     x_train[col]=le.fit_transform(x_train[col])
     x_test[col]=le.transform(x_test[col])
 
-#print(x_train.head())
 
                     #Random Forest Regressor
 
@@ -179,3 +176,31 @@ plt.bar(range(x_train.shape[1]), importances[indices], align='center')
 plt.xticks(range(x_train.shape[1]), features[indices], rotation=90)
 plt.tight_layout()
 plt.show()
+
+
+new_data = pd.DataFrame({
+    'area':[8500, 9500, 7200],
+    'bedrooms':[3, 4, 2],
+    'bathrooms':[2, 3, 1],
+    'stories':[2, 3, 1],
+    'mainroad':['yes','yes','no'],
+    'guestroom':['no','yes','no'],
+    'basement':['yes','no','no'],
+    'hotwaterheating':['no','yes','no'],
+    'airconditioning':['yes','yes','no'],
+    'parking':[2,3,1],
+    'prefarea':['yes','no','no'],
+    'furnishingstatus':['furnished','semi-furnished','unfurnished']
+})
+
+# Encode categorical columns
+for col in new_data.select_dtypes(include=['object']):
+    le = LabelEncoder()
+    new_data[col] = le.fit_transform(new_data[col])
+
+# Scale features
+new_data_scaled = scaler.transform(new_data)
+
+# Predict
+pred_prices = best_gb_model.predict(new_data_scaled)
+print(pred_prices)
