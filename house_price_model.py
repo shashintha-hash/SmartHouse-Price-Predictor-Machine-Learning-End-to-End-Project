@@ -204,3 +204,16 @@ new_data_scaled = scaler.transform(new_data)
 # Predict
 pred_prices = best_gb_model.predict(new_data_scaled)
 print(pred_prices)
+
+
+
+import pickle
+
+# Save the model
+with open("best_gb_model.pkl", "wb") as f:
+    pickle.dump(best_gb_model, f)
+
+# Later, to load the model
+with open("best_gb_model.pkl", "rb") as f:
+    loaded_model = pickle.load(f)
+
