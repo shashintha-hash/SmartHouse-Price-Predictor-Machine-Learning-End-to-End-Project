@@ -51,7 +51,7 @@ prediction=model.predict(x_test)
 
 #Evaluating the model
 mae=mean_absolute_error(y_test,prediction)
-print(f"Mean Absolute Error: {mae}")
+print(f"Random Forest MAE: {mae}")
 
 #feature scaling
 scaler=StandardScaler()
