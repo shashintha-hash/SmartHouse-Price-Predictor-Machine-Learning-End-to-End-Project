@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split,GridSearchCV
 from sklearn.preprocessing import StandardScaler,LabelEncoder
 from sklearn.ensemble import RandomForestRegressor,GradientBoostingRegressor
 from sklearn.metrics import mean_absolute_error
+from sklearn.neighbors import KNeighborsRegressor
 
 #Loading the dataset
 df=pd.read_csv('Housing.csv')
@@ -96,4 +97,16 @@ gb_pred=gb.predict(x_test_scaled)
 #Evaluating the model
 gb_mae=mean_absolute_error(y_test,gb_pred)
 print(f"Gradient Boosting MAE: {gb_mae}")
+
+
+
+         #K-Nearest Neighbors Regressor
+
+knn=KNeighborsRegressor(n_neighbors=5)
+knn.fit(x_train_scaled,y_train)
+knn_pred=knn.predict(x_test_scaled)
+
+#Evaluating the model
+knn_mae=mean_absolute_error(y_test,knn_pred)
+print(f"KNN MAE: {knn_mae}")
 
